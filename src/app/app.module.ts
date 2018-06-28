@@ -1,44 +1,33 @@
-import { BrowserModule } from '@angular/platform-browser';
+// This is the Routing Module
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HeroListComponent } from './hero-list/hero-list.component';
-import { CrisisListComponent } from './crisis-list/crisis-list.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HeroesModule } from './heroes/heroes.module';
+
+import { CrisisCenterComponent } from './crisis-center/crisis-center.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-// configure the application routes.
-// appRoutes is an array of JS objects, with each object containing a route or path in the application.
-// each route maps a URL (path) to a component.
-// appRoutes is passed to the RouterModule.forRoot() to configure the router.
-const appRoutes: Routes = [
-   { path: 'crisis-center', component: CrisisListComponent },
-   // { path: ''}
-   //{ path: 'hero/:id', component: HeroDetailComponent },
-   { path: 'heroes', component: HeroListComponent},
-   {   // default path
-      // a redirectTo path requires a pathMatch property
-      path:'',
-      redirectTo: '/heroes',
-      pathMatch: 'full'
-   },
-   // wildcard route
-   { path: '**', component: PageNotFoundComponent } 
-];
+
+
 
 @NgModule({
    declarations: [
       AppComponent,
-      HeroListComponent,
-      CrisisListComponent,
-      PageNotFoundComponent
-  ],
-  imports: [
+      CrisisCenterComponent,
+      PageNotFoundComponent,
+      CrisisCenterComponent
+   ],
+   imports: [ // order matters!!!
       BrowserModule,
       FormsModule,
-      RouterModule.forRoot(appRoutes, {enableTracing: true})  // enableTracing is added for debugging
-  ],
+      BrowserAnimationsModule,
+      HeroesModule,
+      AppRoutingModule // this needs to be last, or at least AFTER the HeroesModule
+   ],
   providers: [],
   bootstrap: [AppComponent]
 })
