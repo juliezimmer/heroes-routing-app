@@ -1,3 +1,14 @@
-<p>
-  crisis-center works!
-</p>
+<h2>Crises</h2>
+<ul class="items">
+   <li *ngFor="let crisis of crises$ | async"
+      [class.selected]="crisis.id === selectedId">
+      <a [routerLink]="['/crisis', crisis.id]">
+         <span class="badge">{{ crisis.id }}</span> {{ crisis.name }}
+      </a>
+   </li>
+</ul>
+
+<button routerLink="/sidekicks">Go to sidekicks</button>
+
+<!-- router-outlet displays the CrisisCenterHome and CrisisDetail route components. -->
+<router-outlet></router-outlet>

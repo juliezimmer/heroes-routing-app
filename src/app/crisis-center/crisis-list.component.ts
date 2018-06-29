@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { CrisisService, Crisis } from './crisis.service';
 
-@Component({
-  selector: 'app-crisis-center',
-  templateUrl: './crisis-center.component.html',
-  styleUrls: ['./crisis-center.component.css']
-})
-export class CrisisCenterComponent implements OnInit {
 
-  constructor() { }
+@Component({templateUrl: './crisis-list.component.html'})
+export class CrisisListComponent implements OnInit {
+   crises$: Observable<Crisis[]>;
+   private selectedId: number;
 
-  ngOnInit() {
-  }
+   constructor ( private service: CrisisService, 
+               private route: ActivatedRoute) {}
 
-}
+   ngOnInit() {
+      this.crises$ = this.route.paramMap.pipe(
+         switchMap((params: ParamMap) => {
+            // (+) before `params.get()` turns the string into a number
+            this.selectedId = +params.get('id');
+            return this.service.getCrises();
+         })
+      );
+   } 
+}     
